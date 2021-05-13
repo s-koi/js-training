@@ -4,7 +4,17 @@ import Chart from "../../components/Chart04";
 import instruction from "./instruction.md";
 
 const convertData = (input) => {
-  return []; // ここを作りましょう！
+  // 要素を重複なく数えられるようにする
+  const species = Array.from(new Set(input.map(({species}) => species)));
+  // アヤメの品種ごとのデータを作成
+  return species.map((species) => {
+    return {
+      id: species,
+      data: input
+        .filter((item) => item.species === species) // idと一致するレコードを取り出す
+        .map(({sepalLength: x, petalWidth: y}) => ({x, y})), // オブジェクトを作成
+    };
+  });
 };
 
 const Lesson = () => {
